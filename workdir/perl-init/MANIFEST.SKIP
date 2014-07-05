@@ -1,0 +1,12 @@
+\.bak
+\.git
+\.old
+\.swp
+~$
+^blib/
+^cover_db/
+^local/
+^Makefile$
+^MANIFEST.*
+^MYMETA*
+^README.pod

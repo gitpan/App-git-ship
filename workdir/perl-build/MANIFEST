@@ -1,0 +1,7 @@
+.ship.conf
+Changes
+cpanfile
+foo
+lib/Perl/Build.pm
+Makefile.PL
+t/00-basic.t

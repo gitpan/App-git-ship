@@ -1,0 +1,50 @@
+{
+   "abstract" : "unknown",
+   "author" : [
+      "Jan Henning Thorsen <jhthorsen@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "artistic_2"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Perl-Ship",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Test::More" : "0.88"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "perl" : "0"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/jhthorsen/perl-ship/issues"
+      },
+      "homepage" : "https://github.com/jhthorsen/perl-ship",
+      "repository" : {
+         "url" : "https://github.com/jhthorsen/perl-ship"
+      }
+   },
+   "version" : "0.01"
+}
