@@ -220,7 +220,7 @@ sub ship {
 
   unless ($dist_file) {
     $self->build;
-    $self->abort("Project built. Run (git ship) to post to CPAN and alien repostitory.");
+    $self->abort("Project built. Run 'git ship' again to post to CPAN and alien repostitory.");
   }
 
   $self->system(qw( git add Makefile.PL Changes README ));
