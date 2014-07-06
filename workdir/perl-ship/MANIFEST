@@ -1,7 +1,0 @@
-.ship.conf
-Changes
-cpanfile
-lib/Perl/Ship.pm
-Makefile.PL
-README
-t/00-basic.t

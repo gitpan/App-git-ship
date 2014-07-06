@@ -1,0 +1,27 @@
+#!/usr/bin/env perl
+use Applify;
+
+option bool => push => 'Push built project to alien repository.', 0;
+
+documentation 'App::git::ship::Manual';
+extends 'App::git::ship';
+
+app {
+  my $self = shift;
+  my $action = shift || 'ship';
+
+  $ENV{GIT_SHIP_PUSH} = $self->push;
+
+  if ($action eq 'init') {
+    bless $self, $self->detect(@_ ? $_[0] : '');
+    $self->init(@_);
+  }
+  else {
+    bless $self, $self->detect;
+    $self->config;
+    $self->abort("Unknown action: $action") if $action !~ /^[a-z]+$/ or !$self->can($action);
+    $self->$action(@_);
+  }
+
+  return 0;
+};

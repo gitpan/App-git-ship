@@ -18,17 +18,44 @@ $INC{'CPAN/Uploader.pm'} = 'dummy';
 DUMMY
 
 {
+  diag 'First release';
   my $app = App::git::ship->new;
   $app = $app->init('Perl/Ship.pm', 0);
+  $upload_file = '';
 
   create_bad_main_module();
   eval { $app->ship };
   like $@, qr{Could not update VERSION in}, 'Could not update VERSION';
 
   create_main_module();
-  $app->ship;
+  eval { $app->ship };
+  like $@, qr{Project built}, 'Project built';
 
-  is $upload_file, 'Perl-Ship-0.01.tar.gz', 'CPAN::Uploader uploaded file';
+  $app->ship;
+  is $upload_file, 'Perl-Ship-0.01.tar.gz', 'CPAN::Uploader uploaded version 0.01';
+}
+
+{
+  diag 'Second release';
+  my $app = App::git::ship->new;
+  bless $app, $app->detect;
+  $upload_file = '';
+
+  is $app->next_version, '0', 'no next_version yet';
+
+  eval { $app->ship };
+  like $@, qr{Unable to add timestamp}, 'Unable to add timestamp';
+
+  local @ARGV = ('Changes');
+  local $^I = '';
+  while (<>) {
+    print "0.02\n       * Some other cool feature\n\n" if $. == 3;
+    print;
+  }
+
+  $app->build->ship;
+  is $app->next_version, '0.02', 'next_version is 0.02';
+  is $upload_file, 'Perl-Ship-0.02.tar.gz', 'CPAN::Uploader uploaded version 0.02';
 }
 
 done_testing;

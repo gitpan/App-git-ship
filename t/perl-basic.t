@@ -4,15 +4,15 @@ use App::git::ship::perl;
 my $app = App::git::ship::perl->new;
 
 {
-  ok $app->can_handle_project, 'App::git::ship::perl can handle this project';
-}
-
-{
   my $dist_file = 'App-git-SHIP.tar.gz';
   my $found = 0;
+
+  ok $app->can_handle_project, 'App::git::ship::perl can handle this project';
   is $app->project_name, 'App::git::ship', 'project_name()';
   is $app->_dist_files(sub { $found++; return; }), undef, 'found no dist file';
   is $found, 0, '_dist_files callback was not called';
+
+  is_deeply [$app->exe_files], ['bin/git-ship'], 'exe_files: bin/git-ship';
 
   open my $FH, '>', $dist_file or die "Write $dist_file: $!";
   close $FH;
@@ -31,7 +31,7 @@ SKIP: {
   like $author, qr{^[^,]+, <[^\@]+\@[^\>]+>$}, 'got author and email';
 
   $author =~ s!,\s<.*!!;
-  is $app->_author, $author, 'got author';
+  is $app->_author('%an'), $author, 'got author';
 }
 
 done_testing;

@@ -1,6 +1,16 @@
 Changelog for App::git::ship
 
 
+0.02     Sun Jul  6 14:41:27 2014
+       * Need to run ship twice: One for build, and one for ship
+       * Use the default MANIFEST.SKIP file in addition to custom rules
+       * Add "clean" for Perl project
+       * Add Makefile.PL and README to git repository on build
+       * Add EXE_FILES to Makefile.PL
+       * Fix MANIFEST.SKIP to make a proper release
+
 0.01     Sat Jul  5 15:16:30 2014
-       * Started project
+       * Add basic init, build and ship for Perl project
+       * Add basic init for any project
+       * Add detection for Perl projects
 
