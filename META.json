@@ -38,7 +38,7 @@
             "Module::Find" : "0.10",
             "Test::Pod" : "0",
             "Test::Pod::Coverage" : "0",
-            "perl" : "5.10"
+            "perl" : "5.014"
          }
       }
    },
@@ -52,5 +52,5 @@
          "url" : "https://github.com/jhthorsen/app-git-ship.git"
       }
    },
-   "version" : "0.03"
+   "version" : "0.04"
 }
