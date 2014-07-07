@@ -6,7 +6,7 @@ App::git::ship - Git command for shipping your project
 
 =head1 VERSION
 
-0.04
+0.05
 
 =head1 DESCRIPTION
 
@@ -86,7 +86,7 @@ use File::Spec ();
 
 use constant DEBUG => $ENV{GIT_SHIP_DEBUG} || 0;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 my %DATA;
 
@@ -385,8 +385,11 @@ is to make a new tag and push it to "origin".
 
 sub ship {
   my $self = shift;
+  my ($branch) = qx(git branch) =~ /\* (.+)$/m;
 
+  $self->abort("Cannot ship without a current branch") unless $branch;
   $self->abort("Cannot ship without a version number") unless $self->next_version;
+  $self->system(qw( git push origin ), $branch);
   $self->system(qw( git tag ) => $self->next_version);
   $self->system(qw( git push --tags origin ));
 }
