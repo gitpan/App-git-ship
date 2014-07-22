@@ -6,7 +6,7 @@ App::git::ship - Git command for shipping your project
 
 =head1 VERSION
 
-0.07
+0.08
 
 =head1 DESCRIPTION
 
@@ -86,7 +86,7 @@ use File::Spec ();
 
 use constant DEBUG => $ENV{GIT_SHIP_DEBUG} || 0;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 my %DATA;
 
@@ -130,7 +130,7 @@ Set this to true if you want less logging. By default it silent is false.
 
 __PACKAGE__->attr(config => sub {
   my $self = shift;
-  my $file = '.ship.conf';
+  my $file = $ENV{GIT_SHIP_CONFIG} || '.ship.conf';
   my $config;
 
   open my $CFG, '<', $file or $self->abort("Read $file: $!");
@@ -139,9 +139,11 @@ __PACKAGE__->attr(config => sub {
     chomp;
     warn "[ship::config] $_\n" if DEBUG == 2;
     m/\A\s*(?:\#|$)/ and next; # comments
-    s/\s+\#.*$//; # remove inline comments
+    s/\s+(?<!\\)\#\s.*$//; # remove inline comments
     m/^\s*([^\=\s][^\=]*?)\s*=\s*(.*?)\s*$/ or next;
-    $config->{$1} = $2;
+    my ($k, $v) = ($1, $2);
+    $config->{$k} = $v;
+    $config->{$k} =~ s!\\\#!#!g;
     warn "[ship::config] $1 = $2\n" if DEBUG;
   }
 
@@ -272,6 +274,23 @@ sub detect {
   }
 
   $self->abort("Could not figure out what kind of project this is from '$file'");
+}
+
+=head2 run_hook
+
+  $self->run_hook($name);
+
+Used to run a hook before or after an event. The hook is a command which
+needs to be defined in the config file. Example config line parameter:
+
+  before_build = echo foo > bar.txt
+
+=cut
+
+sub run_hook {
+  my ($self, $name) = @_;
+  my $cmd = $self->config->{$name} or return;
+  $self->system($cmd);
 }
 
 =head2 init

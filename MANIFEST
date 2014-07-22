@@ -10,9 +10,12 @@ MANIFEST			This list of files
 README
 t/00-basic.t
 t/bin/git
+t/config-with-comments.t
+t/data/with-comments.conf
 t/perl-basic.t
 t/perl-build.t
 t/perl-init.t
+t/perl-ship-changelog-md.t
 t/perl-ship.t
 t/ship-basic.t
 t/ship-init.t
