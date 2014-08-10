@@ -1,5 +1,9 @@
 Changelog for App::git::ship
 
+0.10     Sun Aug 10 11:23:22 2014
+       * Rename "init" to "start"
+       * Remove --push application switch
+
 0.09     Thu Jul 31 12:17:40 2014
        * Try to avoid failing cpantesters test "!! 'git init' failed: 1"
 
