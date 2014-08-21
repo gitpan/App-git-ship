@@ -6,7 +6,7 @@ App::git::ship - Git command for shipping your project
 
 =head1 VERSION
 
-0.11
+0.12
 
 =head1 DESCRIPTION
 
@@ -227,7 +227,7 @@ use File::Spec ();
 
 use constant DEBUG => $ENV{GIT_SHIP_DEBUG} || 0;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 my %DATA;
 
@@ -587,6 +587,17 @@ sub system {
 
   $self->abort("'$program @args' failed: $exit_code") if $exit_code;
   $self;
+}
+
+=head2 test_coverage
+
+This method check test coverage for the project. The default behavior is to
+L</abort>. Need to be overridden in the subclass.
+
+=cut
+
+sub test_coverage {
+  $_[0]->abort('test_coverage() is not available for %s', ref $_[0]);
 }
 
 =head2 import
